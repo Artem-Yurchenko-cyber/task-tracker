@@ -26,7 +26,7 @@ h1 {
 }
 
 #taskList li button {
-    background-color: red;
+    background-color: rgb(255, 8, 8);
     color: white;
     border: none;
     padding: 5px 10px;
