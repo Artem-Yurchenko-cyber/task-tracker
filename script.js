@@ -1,46 +1,45 @@
+window.onload = loadTasks;
+
 function loadTasks() {
-  const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
-  tasks.forEach(taskText => renderTask(taskText));
+    const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+    tasks.forEach(taskText => renderTask(taskText));
 }
 
-function saveTasks() {
-  const taskList = document.querySelectorAll('#taskList li');
-  const tasks = [];
+function renderTask(taskText){
+    const taskList = document.getElementById('taskList');
+    const li = document.createElement('li');
+    li.textContent = taskText;
 
-  taskList.forEach(li => {
-    const text = li.firstChild.textContent;
-    tasks.push(text);
-  });
+    const deleteBtn = document.createElement('button');
+    deleteBtn.textContent = 'X';
+    deleteBtn.onclick = () => {
+        li.remove();
+        saveTasks();
+    };
 
-  localStorage.setItem('tasks', JSON.stringify(tasks));
+    li.appendChild(deleteBtn);
+    taskList.appendChild(li);
 }
 
-function renderTask(taskText) {
-  const taskList = document.getElementById('taskList');
-  const li = document.createElement('li');
-  li.textContent = taskText;
+function saveTasks(){
+    const taskList = document.querySelectorAll('#taskList li');
+    const tasks = [];
 
-  const deleteBtn = document.createElement('button');
-  deleteBtn.textContent = 'X';
-  deleteBtn.onclick = () => {
-    li.remove();
-    saveTasks();
-  };
+    taskList.forEach(li => {
+        const text = li.firstChild.textContent;
+        tasks.push(text);
+    });
 
-  li.appendChild(deleteBtn);
-  taskList.appendChild(li);
+    localStorage.setItem('tasks', JSON.stringify(tasks));
 }
 
 function addTask() {
-  const input = document.getElementById('taskInput');
-  const taskText = input.value.trim();
+    const input = document.getElementById('taskInput');
+    const taskText = input.value.trim();
 
-  if (taskText === '') return;
+    if (taskText === '') return;
 
-  renderTask(taskText);
-  saveTasks();
-  input.value = '';
+    renderTask(taskText);
+    saveTasks();
+    input.value = '';
 }
-
-// Коли сторінка завантажилась — завантажити задачі
-window.onload = loadTasks;
